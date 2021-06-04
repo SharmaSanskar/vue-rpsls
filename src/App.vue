@@ -1,26 +1,64 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Header />
+  <Credentials v-if="!gameStatus" @startGame="initializeGame" />
+  <div v-else>
+    <Scores
+      :playerName="playerName"
+      :characterName="characterName"
+      :playerScore="playerScore"
+      :characterScore="characterScore"
+      @triggerReset="resetGame"
+    />
+    <Selection @sendWinner="incrementScore" />
+  </div>
+  <Footer />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from "./components/Header.vue";
+import Credentials from "./components/Credentials.vue";
+import Scores from "./components/Scores.vue";
+import Selection from "./components/Selection.vue";
+import Footer from "./components/Footer.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    Header,
+    Credentials,
+    Scores,
+    Selection,
+    Footer,
+  },
+  data() {
+    return {
+      playerScore: 0,
+      characterScore: 0,
+      gameStatus: false,
+    };
+  },
+  methods: {
+    incrementScore(winner) {
+      if (winner === "player") {
+        this.playerScore++;
+      }
+      if (winner === "character") {
+        this.characterScore++;
+      }
+    },
+    initializeGame(playerName, characterName) {
+      this.gameStatus = true;
+      this.playerName = playerName;
+      this.characterName = characterName;
+    },
+    resetGame() {
+      this.playerScore = 0;
+      this.characterScore = 0;
+      this.gameStatus = false;
+    },
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
