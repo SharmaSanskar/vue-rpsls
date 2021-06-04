@@ -15,6 +15,7 @@ export default {
   data() {
     return {
       gameData: data(),
+      winner: "",
       winnerSelection: "",
       loserSelection: "",
       firstSelection: false,
@@ -26,9 +27,10 @@ export default {
         return "Let's Play";
       }
       if (this.winnerSelection && this.loserSelection) {
+        const outcome = this.winner === "player" ? "You win 🔥" : "You Lose 😭";
         return `${this.winnerSelection} ${
           this.gameData[this.winnerSelection][this.loserSelection]
-        } ${this.loserSelection}`;
+        } ${this.loserSelection}. ${outcome}`;
       }
       return "Tie";
     },
@@ -47,7 +49,6 @@ export default {
     makeSelection(playerSelection) {
       this.firstSelection = true;
       const characterSelection = this.characterChoice();
-      console.log(characterSelection);
       const playerWinner = this.isWinner(playerSelection, characterSelection);
       const characterWinner = this.isWinner(
         characterSelection,
@@ -57,11 +58,13 @@ export default {
       if (playerWinner) {
         this.winnerSelection = playerSelection;
         this.loserSelection = characterSelection;
-        this.$emit("sendWinner", "player");
+        this.winner = "player";
+        this.$emit("sendWinner", this.winner);
       } else if (characterWinner) {
         this.winnerSelection = characterSelection;
         this.loserSelection = playerSelection;
-        this.$emit("sendWinner", "character");
+        this.winner = "character";
+        this.$emit("sendWinner", this.winner);
       } else {
         this.winnerSelection = "";
         this.loserSelection = "";

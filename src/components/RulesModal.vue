@@ -52,8 +52,9 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: white;
-  width: 300px;
-  height: 300px;
+  width: 30vw;
+  height: 90vh;
   padding: 5px;
+  border-radius: 0.8rem;
 }
 </style>
