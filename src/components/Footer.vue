@@ -3,12 +3,14 @@
   <rules-modal />
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import RulesModal from "./RulesModal.vue";
-export default {
+
+export default defineComponent({
   name: "Footer",
   components: { RulesModal },
-};
+});
 </script>
 
 <style>

@@ -4,8 +4,10 @@
   <button @click="$emit('triggerReset')">Reset</button>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "Scores",
   emits: ["triggerReset"],
   props: {
@@ -14,7 +16,7 @@ export default {
     playerScore: Number,
     characterScore: Number,
   },
-};
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

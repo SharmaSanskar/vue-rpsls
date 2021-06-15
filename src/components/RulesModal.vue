@@ -21,15 +21,19 @@
   </teleport>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
   name: "RulesModal",
-  data() {
+
+  setup() {
+    const modalOpen = ref(false);
     return {
-      modalOpen: false,
+      modalOpen,
     };
   },
-};
+});
 </script>
 
 <style>

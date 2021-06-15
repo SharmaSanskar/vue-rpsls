@@ -7,72 +7,76 @@
   <button @click="makeSelection('Spock')">🖖</button>
 </template>
 
-<script>
-import data from "../../data.js";
-export default {
+<script lang="ts">
+import { computed, defineComponent, reactive, ref } from "vue";
+import { Data, data } from "@/data";
+
+export default defineComponent({
   name: "Selection",
   emits: ["sendWinner"],
-  data() {
-    return {
-      gameData: data(),
-      winner: "",
-      winnerSelection: "",
-      loserSelection: "",
-      firstSelection: false,
-    };
-  },
-  computed: {
-    result() {
-      if (!this.firstSelection) {
+
+  setup(props, context) {
+    const gameData = reactive<Data>({ ...data });
+    const winner = ref("");
+    const winnerSelection = ref("");
+    const loserSelection = ref("");
+    const firstSelection = ref(false);
+
+    // Computed Property
+    const result = computed(() => {
+      if (!firstSelection.value) {
         return "Let's Play";
       }
-      if (this.winnerSelection && this.loserSelection) {
-        const outcome = this.winner === "player" ? "You win 🔥" : "You Lose 😭";
-        return `${this.winnerSelection} ${
-          this.gameData[this.winnerSelection][this.loserSelection]
-        } ${this.loserSelection}. ${outcome}`;
+      if (winnerSelection.value && loserSelection.value) {
+        const outcome =
+          winner.value === "player" ? "You win 🔥" : "You Lose 😭";
+        return `${winnerSelection.value} ${
+          gameData[winnerSelection.value][loserSelection.value]
+        } ${loserSelection.value}. ${outcome}`;
       }
       return "Tie";
-    },
-  },
-  methods: {
-    characterChoice() {
+    });
+
+    // Methods
+    const characterChoice = () => {
       const choices = ["Rock", "Paper", "Scissors", "Lizard", "Spock"];
       const randomNumber = Math.floor(Math.random() * 5);
       return choices[randomNumber];
-    },
+    };
 
-    isWinner(selection, opponentSelection) {
-      return opponentSelection in this.gameData[selection];
-    },
+    const isWinner = (selection: string, opponentSelection: string) => {
+      return opponentSelection in gameData[selection];
+    };
 
-    makeSelection(playerSelection) {
-      this.firstSelection = true;
-      const characterSelection = this.characterChoice();
-      const playerWinner = this.isWinner(playerSelection, characterSelection);
-      const characterWinner = this.isWinner(
-        characterSelection,
-        playerSelection
-      );
+    const makeSelection = (playerSelection: string) => {
+      firstSelection.value = true;
+      const characterSelection = characterChoice();
+      const playerWinner = isWinner(playerSelection, characterSelection);
+      const characterWinner = isWinner(characterSelection, playerSelection);
 
       if (playerWinner) {
-        this.winnerSelection = playerSelection;
-        this.loserSelection = characterSelection;
-        this.winner = "player";
-        this.$emit("sendWinner", this.winner);
+        winnerSelection.value = playerSelection;
+        loserSelection.value = characterSelection;
+        winner.value = "player";
+        context.emit("sendWinner", winner.value);
       } else if (characterWinner) {
-        this.winnerSelection = characterSelection;
-        this.loserSelection = playerSelection;
-        this.winner = "character";
-        this.$emit("sendWinner", this.winner);
+        winnerSelection.value = characterSelection;
+        loserSelection.value = playerSelection;
+        winner.value = "character";
+        context.emit("sendWinner", winner.value);
       } else {
-        this.winnerSelection = "";
-        this.loserSelection = "";
-        this.$emit("sendWinner", "tie");
+        winnerSelection.value = "";
+        loserSelection.value = "";
+        context.emit("sendWinner", "tie");
       }
-    },
+    };
+
+    return {
+      result,
+      makeSelection,
+    };
   },
-};
+});
 </script>
 
 <style>

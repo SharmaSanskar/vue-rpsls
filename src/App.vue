@@ -14,14 +14,15 @@
   <Footer />
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, onMounted, ref } from "vue";
 import Header from "./components/Header.vue";
 import Credentials from "./components/Credentials.vue";
 import Scores from "./components/Scores.vue";
 import Selection from "./components/Selection.vue";
 import Footer from "./components/Footer.vue";
 
-export default {
+export default defineComponent({
   name: "App",
   components: {
     Header,
@@ -30,68 +31,81 @@ export default {
     Selection,
     Footer,
   },
-  data() {
-    return {
-      playerScore: 0,
-      characterScore: 0,
-      gameStatus: false,
+
+  setup() {
+    const playerName = ref("");
+    const characterName = ref("");
+    const playerScore = ref(0);
+    const characterScore = ref(0);
+    const gameStatus = ref(false);
+
+    // Lifecycle Hooks
+    onMounted(() => {
+      // Getting data from LocalStorage
+      if (localStorage.gameStatus) {
+        gameStatus.value = JSON.parse(localStorage.gameStatus);
+      }
+      if (localStorage.scores) {
+        const scores = JSON.parse(localStorage.scores);
+        playerScore.value = scores.playerScore;
+        characterScore.value = scores.characterScore;
+      }
+      if (localStorage.names) {
+        const names = JSON.parse(localStorage.names);
+        playerName.value = names.playerName;
+        characterName.value = names.characterName;
+      }
+    });
+
+    // Methods
+    const initializeGame = (player_name: string, character_name: string) => {
+      gameStatus.value = true;
+      playerName.value = player_name;
+      characterName.value = character_name;
+      // Adding to LocalStorage
+      localStorage.gameStatus = JSON.stringify(gameStatus.value);
+      localStorage.names = JSON.stringify({
+        playerName: playerName.value,
+        characterName: characterName.value,
+      });
     };
-  },
-  mounted() {
-    //Getting data from LocalStorage
-    if (localStorage.gameStatus) {
-      this.gameStatus = JSON.parse(localStorage.gameStatus);
-    }
-    if (localStorage.scores) {
-      const { playerScore, characterScore } = JSON.parse(localStorage.scores);
-      this.playerScore = playerScore;
-      this.characterScore = characterScore;
-    }
-    if (localStorage.names) {
-      const { playerName, characterName } = JSON.parse(localStorage.names);
-      this.playerName = playerName;
-      this.characterName = characterName;
-    }
-  },
-  methods: {
-    incrementScore(winner) {
+
+    const incrementScore = (winner: string) => {
       if (winner === "player") {
-        this.playerScore++;
+        playerScore.value++;
       }
       if (winner === "character") {
-        this.characterScore++;
+        characterScore.value++;
       }
-
       // Adding to LocalStorage
       localStorage.scores = JSON.stringify({
-        playerScore: this.playerScore,
-        characterScore: this.characterScore,
+        playerScore: playerScore.value,
+        characterScore: characterScore.value,
       });
-    },
-    initializeGame(playerName, characterName) {
-      this.gameStatus = true;
-      this.playerName = playerName;
-      this.characterName = characterName;
+    };
 
-      // Adding to LocalStorage
-      localStorage.gameStatus = JSON.stringify(this.gameStatus);
-      localStorage.names = JSON.stringify({
-        playerName: this.playerName,
-        characterName: this.characterName,
-      });
-    },
-    resetGame() {
-      this.gameStatus = false;
-      this.playerScore = 0;
-      this.characterScore = 0;
-      this.playerName = "";
-      this.characterName = "";
-
+    const resetGame = () => {
+      gameStatus.value = false;
+      playerScore.value = 0;
+      characterScore.value = 0;
+      playerName.value = "";
+      characterName.value = "";
       // Clearing LocalStorage
       localStorage.clear();
-    },
+    };
+
+    return {
+      playerName,
+      characterName,
+      playerScore,
+      characterScore,
+      gameStatus,
+      initializeGame,
+      incrementScore,
+      resetGame,
+    };
   },
-};
+});
 </script>
 
 <style>

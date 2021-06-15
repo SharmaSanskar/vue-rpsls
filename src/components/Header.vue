@@ -3,10 +3,12 @@
   <p>from The Big Bang Theory</p>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "Header",
-};
+});
 </script>
 
 <style>

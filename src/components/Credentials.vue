@@ -21,17 +21,23 @@
   </form>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
   name: "Credentials",
   emits: ["startGame"],
-  data() {
+
+  setup() {
+    const playerName = ref("");
+    const characterName = ref("");
+
     return {
-      playerName: "",
-      characterName: "",
+      playerName,
+      characterName,
     };
   },
-};
+});
 </script>
 
 <style>
