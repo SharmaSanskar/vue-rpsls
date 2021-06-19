@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: #eee;
+  color: #393e46;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 3vw, 2.4rem);
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3vw, 2rem);
+}
+
+h3 {
+  font-size: clamp(1.2rem, 3vw, 1.4rem);
+}
+
+h4 {
+  font-size: clamp(0.6rem, 3vw, 0.8rem);
+}
+
+p {
+  font-size: clamp(0.8rem, 3vw, 1rem);
+}
+
+button {
+  padding: 0.4rem 0.8rem;
+  border: 3px solid #aad8d3;
+  border-radius: 0.3rem;
+  background: #00adb5;
+  color: #eeeeee;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #aad8d3;
+  color: #00adb5;
+}

@@ -1,16 +1,20 @@
 <template>
   <Header />
-  <Credentials v-if="!gameStatus" @startGame="initializeGame" />
-  <div v-else>
-    <Scores
-      :playerName="playerName"
-      :characterName="characterName"
-      :playerScore="playerScore"
-      :characterScore="characterScore"
-      @triggerReset="resetGame"
-    />
-    <Selection @sendWinner="incrementScore" />
-  </div>
+  <main>
+    <transition name="switch" mode="out-in">
+      <Credentials v-if="!gameStatus" @startGame="initializeGame" />
+      <div v-else>
+        <Scores
+          :playerName="playerName"
+          :characterName="characterName"
+          :playerScore="playerScore"
+          :characterScore="characterScore"
+          @triggerReset="resetGame"
+        />
+        <Selection @sendWinner="incrementScore" />
+      </div>
+    </transition>
+  </main>
   <Footer />
 </template>
 
@@ -109,4 +113,28 @@ export default defineComponent({
 </script>
 
 <style>
+main {
+  min-height: 80vh;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Transitions */
+.switch-enter-from {
+  opacity: 0;
+  transform: translateX(100px);
+}
+
+.switch-enter-active {
+  transition: all 0.8s ease;
+}
+
+.switch-leave-to {
+  opacity: 0;
+  transform: translateX(-100px);
+}
+
+.switch-leave-active {
+  transition: all 0.8s ease;
+}
 </style>

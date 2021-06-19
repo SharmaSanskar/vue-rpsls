@@ -1,10 +1,24 @@
 <template>
-  <h3>{{ result }}</h3>
-  <button @click="makeSelection('Rock')">✊</button>
-  <button @click="makeSelection('Paper')">✋</button>
-  <button @click="makeSelection('Scissors')">✌</button>
-  <button @click="makeSelection('Lizard')">🤏</button>
-  <button @click="makeSelection('Spock')">🖖</button>
+  <section class="selection">
+    <h1 class="result">{{ result }}</h1>
+    <div class="choices">
+      <div @click="makeSelection('Rock')">
+        <img src="../assets/img/rock.png" alt="rock-symbol" />
+      </div>
+      <div @click="makeSelection('Paper')">
+        <img src="../assets/img/paper.png" alt="paper-symbol" />
+      </div>
+      <div @click="makeSelection('Scissors')">
+        <img src="../assets/img/scissors.png" alt="scissors-symbol" />
+      </div>
+      <div @click="makeSelection('Lizard')">
+        <img src="../assets/img/lizard.png" alt="lizard-symbol" />
+      </div>
+      <div @click="makeSelection('Spock')">
+        <img src="../assets/img/spock.png" alt="spock-symbol" />
+      </div>
+    </div>
+  </section>
 </template>
 
 <script lang="ts">
@@ -34,7 +48,7 @@ export default defineComponent({
           gameData[winnerSelection.value][loserSelection.value]
         } ${loserSelection.value}. ${outcome}`;
       }
-      return "Tie";
+      return "It's a tie 😐";
     });
 
     // Methods
@@ -80,4 +94,37 @@ export default defineComponent({
 </script>
 
 <style>
+.selection {
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.choices {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 2.6rem 0;
+}
+
+.choices div {
+  background: #00adb5;
+  border: 4px solid #278ea5;
+  border-radius: 50%;
+  padding: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.choices div:hover {
+  transform: scale(1.1);
+  border: 4px solid #aad8d3;
+}
+
+.result {
+  color: #1f4287;
+  text-align: center;
+}
 </style>

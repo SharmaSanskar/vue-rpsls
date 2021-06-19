@@ -1,6 +1,8 @@
 <template>
-  <h1>ROCK, PAPER, SCISSORS, LIZARD, SPOCK</h1>
-  <p>from The Big Bang Theory</p>
+  <header>
+    <h3>ROCK, PAPER, SCISSORS, LIZARD, SPOCK</h3>
+    <h4>from The Big Bang Theory</h4>
+  </header>
 </template>
 
 <script lang="ts">
@@ -11,5 +13,19 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
+header {
+  background: #393e46;
+  color: #eeeeee;
+  height: 10vh;
+  padding: 0.8rem 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h4 {
+  color: #aad8d3;
+}
 </style>

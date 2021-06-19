@@ -1,7 +1,18 @@
 <template>
-  <h1>{{ playerName }} Score: {{ playerScore }}</h1>
-  <h1>{{ characterName }} Score: {{ characterScore }}</h1>
-  <button @click="$emit('triggerReset')">Reset</button>
+  <section class="scores">
+    <div class="player-info">
+      <h2>{{ playerName }}</h2>
+      <h1>{{ playerScore }}</h1>
+    </div>
+    <div class="versus">
+      <h2>v/s</h2>
+      <button @click="$emit('triggerReset')">Reset</button>
+    </div>
+    <div class="character-info">
+      <h2>{{ characterName }}</h2>
+      <h1>{{ characterScore }}</h1>
+    </div>
+  </section>
 </template>
 
 <script lang="ts">
@@ -19,20 +30,42 @@ export default defineComponent({
 });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.scores {
+  min-height: 30vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 50%;
+  margin: 0 auto;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.player-info,
+.character-info,
+.versus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.player-info h1,
+.character-info h1 {
+  background: #aad8d3;
+  border: 4px solid #278ea5;
+  color: #1f4287;
+  padding: 0.4rem 1.2rem;
+  width: 6rem;
+  text-align: center;
 }
-a {
-  color: #42b983;
+
+.player-info h2,
+.character-info h2 {
+  margin: 2rem 0 0.6rem 0;
+  color: #1f4287;
+}
+
+.versus h2 {
+  margin: 2rem 0 2.5rem 0;
+  color: #278ea5;
 }
 </style>
