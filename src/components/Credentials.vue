@@ -1,10 +1,8 @@
 <template>
   <section class="credentials">
-    <transition name="gif-fade" appear>
-      <div class="gif">
-        <img src="../assets/img/home-gif.gif" alt="game-gif" />
-      </div>
-    </transition>
+    <div class="gif">
+      <img src="../assets/img/home-gif.gif" alt="game-gif" />
+    </div>
     <transition name="form-fade" appear>
       <form @submit.prevent="$emit('startGame', playerName, characterName)">
         <div class="player-name">
@@ -61,7 +59,7 @@ export default defineComponent({
 }
 
 .gif {
-  margin: 2rem;
+  margin: 1.5rem;
 }
 
 form {
@@ -94,21 +92,13 @@ label {
 }
 
 button[type="submit"] {
-  margin: 2rem;
-  padding: 0.8rem;
+  margin: 1.8rem;
+  padding: 0.7rem;
   font-size: 1rem;
   text-transform: uppercase;
 }
 
 /* Transitions */
-.gif-fade-enter-from {
-  opacity: 0;
-}
-
-.gif-fade-enter-active {
-  transition: all 2s ease;
-}
-
 .form-fade-enter-from {
   opacity: 0;
   transform: translateY(-60px);

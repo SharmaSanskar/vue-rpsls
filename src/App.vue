@@ -1,7 +1,7 @@
 <template>
   <Header />
   <main>
-    <transition name="switch" mode="out-in">
+    <transition name="switch" mode="out-in" appear>
       <Credentials v-if="!gameStatus" @startGame="initializeGame" />
       <div v-else>
         <Scores
